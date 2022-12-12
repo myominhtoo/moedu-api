@@ -15,4 +15,5 @@ public class MoEdu {
     public static String TEACHER_PREFIX = "tchl";
     public static String STUDENT_PREFIX = "stu";
     public static String ADMIN_PREFIX = "adm";
+    public static Integer ID_LENGTH = 10;
 }
