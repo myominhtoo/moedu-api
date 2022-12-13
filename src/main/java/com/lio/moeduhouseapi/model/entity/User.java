@@ -7,7 +7,6 @@ import lombok.ToString;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -50,6 +49,12 @@ public class User {
 
     @Column( name = "profile_image_uri" , nullable = true )
     private String profileImageUri;
+
+    @Column( name = "is_enable" , nullable = false )
+    private boolean isEnable;
+
+    @Column( name = "verify_code" , nullable = true )
+    private String verifyCode;
 
     @Column( name = "created_date" , nullable = true )
     private LocalDateTime createdDate;

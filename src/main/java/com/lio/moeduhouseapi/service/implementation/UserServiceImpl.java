@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
+
     private UserRepository userRepository;
 
     @Autowired
@@ -29,4 +30,10 @@ public class UserServiceImpl implements UserService {
     public User signinUser(User user){
         return null;
     }
+
+    @Override
+    public boolean isUserDuplicate(User user){
+        return false;
+    }
+    
 }

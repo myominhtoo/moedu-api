@@ -8,4 +8,6 @@ public interface UserService {
     User updateUser( User user );
 
     User signinUser( User user );
+
+    boolean isUserDuplicate( User user );
 }
