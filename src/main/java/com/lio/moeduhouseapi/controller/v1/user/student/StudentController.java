@@ -1,4 +1,4 @@
-package com.lio.moeduhouseapi.controller.v1.user.teacher;
+package com.lio.moeduhouseapi.controller.v1.user.student;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -8,24 +8,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.lio.moeduhouseapi.model.dto.HttpResponse;
 import com.lio.moeduhouseapi.model.entity.User;
-import com.lio.moeduhouseapi.service.implementation.TeacherServiceImpl;
+import com.lio.moeduhouseapi.service.implementation.StudentServiceImpl;
 
 @RestController
 @RequestMapping( name = "/api/v1" )
-public class TeacherController {
+public class StudentController {
     
-    private TeacherServiceImpl teacherService;
+    private StudentServiceImpl studentService;
 
     @Autowired
-    public TeacherController( TeacherServiceImpl teacherService ){
-        this.teacherService = teacherService;
+    public StudentController( StudentServiceImpl studentService ){
+        this.studentService = studentService;
     }
 
     /*
-     * create new teacher 
+     * create new student
      */
-    @PostMapping( name = "/teachers" )
-    public HttpResponse<User> createNewTeacher( @RequestBody User teacher ){
+    @PostMapping( name = "/students" )
+    public HttpResponse<User> createNewStudent( @RequestBody User student ){
         return null;
     }
 

@@ -2,8 +2,9 @@ package com.lio.moeduhouseapi.service.interfaces;
 
 import com.lio.moeduhouseapi.model.entity.User;
 
-public interface TeacherService {
-    
-    User createTeacher( User teacher );
+public interface StudentService {
 
+    User createStudent( User student );
+    
 }
+
