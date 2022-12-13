@@ -10,7 +10,7 @@ import com.lio.moeduhouseapi.model.entity.User;
 import com.lio.moeduhouseapi.service.implementation.AdminServiceImpl;
 
 @RestController
-@RequestMapping( name = "/api/v1" )
+@RequestMapping( value = "/api/v1" )
 public class AdminController {
     
     private AdminServiceImpl adminService;
@@ -22,7 +22,7 @@ public class AdminController {
     /*
      * create new admin
      */
-    @PostMapping( name = "/admins" )
+    @PostMapping( value = "/admins" )
     public HttpResponse<User> createNewAdmin( @RequestBody User admin ){
         return null;
     }

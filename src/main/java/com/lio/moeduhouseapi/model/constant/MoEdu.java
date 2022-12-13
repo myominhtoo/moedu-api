@@ -17,4 +17,5 @@ public class MoEdu {
     public static String ADMIN_PREFIX = "adm";
     public static Integer ID_LENGTH = 12;
     public static Integer VERIFY_CODE_LENGTH = 10;
+    public static Integer [] UNUPDATABLE_ROLE_IDS = { 1 , 2 , 3 };
 }

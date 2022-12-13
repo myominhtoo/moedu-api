@@ -11,7 +11,7 @@ import com.lio.moeduhouseapi.model.entity.User;
 import com.lio.moeduhouseapi.service.implementation.StudentServiceImpl;
 
 @RestController
-@RequestMapping( name = "/api/v1" )
+@RequestMapping( value = "/api/v1" )
 public class StudentController {
     
     private StudentServiceImpl studentService;
@@ -24,7 +24,7 @@ public class StudentController {
     /*
      * create new student
      */
-    @PostMapping( name = "/students" )
+    @PostMapping( value = "/students" )
     public HttpResponse<User> createNewStudent( @RequestBody User student ){
         return null;
     }
