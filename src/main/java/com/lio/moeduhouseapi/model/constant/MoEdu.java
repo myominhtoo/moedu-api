@@ -16,4 +16,5 @@ public class MoEdu {
     public static String STUDENT_PREFIX = "stu";
     public static String ADMIN_PREFIX = "adm";
     public static Integer ID_LENGTH = 12;
+    public static Integer VERIFY_CODE_LENGTH = 10;
 }

@@ -5,6 +5,7 @@ import com.lio.moeduhouseapi.repository.UserRepository;
 import com.lio.moeduhouseapi.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.view.RedirectView;
 
 @Service("userService")
 public class UserServiceImpl implements UserService {
@@ -20,6 +21,12 @@ public class UserServiceImpl implements UserService {
     public User createUser(User user) {
         return null;
     }
+
+    @Override
+    public RedirectView verifyEmail(String email) {
+        // TODO Auto-generated method stub
+        return null;
+    } 
 
     @Override
     public User updateUser(User user){

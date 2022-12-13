@@ -26,6 +26,21 @@ public class RandomGenerator {
         return generatedId;
     }
 
+    public static String generateVerifyCode(){
+        String generatedCode = "";
+        boolean isNumberTurn = true;
+
+        Random random = new Random();
+        for( int i = 0 ; i < VERIFY_CODE_LENGTH ; i++ ){
+           generatedCode += isNumberTurn
+                            ? String.valueOf(NUMBERS[random.nextInt(NUMBERS.length -1 )])
+                            : String.valueOf(CHARACTERS[random.nextInt(CHARACTERS.length -1 )]);
+            isNumberTurn = random.nextBoolean();
+        }
+        
+        return generatedCode;
+    }
+
     private static String getPostfixForId( Integer roleId ){
         switch(roleId){
             case 1 :
