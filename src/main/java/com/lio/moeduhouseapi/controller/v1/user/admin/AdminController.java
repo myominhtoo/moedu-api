@@ -1,13 +1,12 @@
 package com.lio.moeduhouseapi.controller.v1.user.admin;
 
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.lio.moeduhouseapi.model.dto.HttpResponse;
 import com.lio.moeduhouseapi.model.entity.User;
 import com.lio.moeduhouseapi.service.implementation.AdminServiceImpl;
+
+import java.util.List;
 
 @RestController
 @RequestMapping( value = "/api/v1" )
@@ -26,5 +25,12 @@ public class AdminController {
     public HttpResponse<User> createNewAdmin( @RequestBody User admin ){
         return null;
     }
- 
+
+    /*
+     * getting all admins
+     */
+    @GetMapping( value = "/admins" )
+    public List<User> getAllAdmins(){
+        return this.adminService.getAllAdmins();
+    }
 }

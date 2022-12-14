@@ -1,14 +1,13 @@
 package com.lio.moeduhouseapi.controller.v1.user.teacher;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.lio.moeduhouseapi.model.dto.HttpResponse;
 import com.lio.moeduhouseapi.model.entity.User;
 import com.lio.moeduhouseapi.service.implementation.TeacherServiceImpl;
+
+import java.util.List;
 
 @RestController
 @RequestMapping( value = "/api/v1" )
@@ -29,4 +28,11 @@ public class TeacherController {
         return null;
     }
 
+    /*
+     * getting all teachers
+     */
+    @GetMapping( value = "/teachers" )
+    public List<User> getAllTeachers(){
+        return this.teacherService.getAllTeachers();
+    }
 }

@@ -7,10 +7,22 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.util.List;
+
 @Service("userService")
 public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
+
+    @Override
+    public List<User> getAllUsers() {
+       return this.userRepository.findAll();
+    }
+
+    @Override
+    public List<User> getUsersByRoleId(Integer roleId) {
+        return this.userRepository.findUsersByRoleId(roleId);
+    }
 
     @Autowired
     public UserServiceImpl(UserRepository userRepository){
