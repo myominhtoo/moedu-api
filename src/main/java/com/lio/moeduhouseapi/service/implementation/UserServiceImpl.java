@@ -1,16 +1,20 @@
 package com.lio.moeduhouseapi.service.implementation;
 
+import com.lio.moeduhouseapi.model.dto.CustomUserDetails;
 import com.lio.moeduhouseapi.model.entity.User;
 import com.lio.moeduhouseapi.repository.UserRepository;
 import com.lio.moeduhouseapi.service.interfaces.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
 
 import java.util.List;
 
 @Service("userService")
-public class UserServiceImpl implements UserService {
+public class UserServiceImpl implements UserService , UserDetailsService {
 
     private UserRepository userRepository;
 
@@ -36,7 +40,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public RedirectView verifyEmail(String email) {
-        // TODO Auto-generated method stub
         return null;
     } 
 
@@ -54,5 +57,14 @@ public class UserServiceImpl implements UserService {
     public boolean isUserDuplicate(User user){
         return false;
     }
-    
+
+    /*
+     * username means email address
+     */
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        User savedUser = this.userRepository.findByEmail(username)
+                        .orElseThrow(() -> new UsernameNotFoundException("Invalid User!"));
+        return new CustomUserDetails(savedUser);
+    }
 }

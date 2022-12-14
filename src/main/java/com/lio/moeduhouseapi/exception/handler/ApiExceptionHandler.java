@@ -2,6 +2,8 @@ package com.lio.moeduhouseapi.exception.handler;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
@@ -48,7 +50,7 @@ public class ApiExceptionHandler {
      * ADMIN,TEACHER,STUDENT
      */
     @ExceptionHandler({ UnableUpdateRoleException.class })
-    public ResponseEntity<HttpResponse<Boolean>> unableUpdateRoleExceptiResponseEntity( UnableUpdateRoleException e ){
+    public ResponseEntity<HttpResponse<Boolean>> unableUpdateRoleException( UnableUpdateRoleException e ){
         HttpResponse<Boolean>  httpResponse = new HttpResponse<Boolean>(
             LocalDateTime.now(), 
             "Unable to update this Role!",
@@ -58,5 +60,36 @@ public class ApiExceptionHandler {
             false );
         return ResponseEntity.ok().body(httpResponse);
     }
+
+    /*
+     * for username not found , use with log in
+     */
+    @ExceptionHandler( { UsernameNotFoundException.class })
+    public ResponseEntity<HttpResponse<Boolean>> usernameNotFoundException( UsernameNotFoundException e ){
+        HttpResponse<Boolean>  httpResponse = new HttpResponse<Boolean>(
+                LocalDateTime.now(),
+                "Invalid user!",
+                false ,
+                HttpStatus.BAD_REQUEST ,
+                HttpStatus.BAD_REQUEST.value() ,
+                false );
+        return ResponseEntity.ok().body(httpResponse);
+    }
+
+    /*
+     * for bad credential exception
+     */
+    @ExceptionHandler( { BadCredentialsException.class })
+    public ResponseEntity<HttpResponse<Boolean>> badCredentialException( BadCredentialsException e ){
+        HttpResponse<Boolean>  httpResponse = new HttpResponse<Boolean>(
+                LocalDateTime.now(),
+                "Invalid email or password!",
+                false ,
+                HttpStatus.BAD_REQUEST ,
+                HttpStatus.BAD_REQUEST.value() ,
+                false );
+        return ResponseEntity.ok().body(httpResponse);
+    }
+
 
 }
