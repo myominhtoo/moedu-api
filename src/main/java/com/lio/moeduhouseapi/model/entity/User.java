@@ -60,7 +60,7 @@ public class User {
     private LocalDateTime createdDate;
 
     @Column( name = "updated_date" , nullable = true )
-    private LocalDateTime updateDate;
+    private LocalDateTime updatedDate;
 
     @Column( name = "last_logged_in_date", nullable = true)
     private LocalDateTime lastLoggedInDate;

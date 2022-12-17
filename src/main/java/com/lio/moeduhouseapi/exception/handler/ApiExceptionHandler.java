@@ -91,5 +91,20 @@ public class ApiExceptionHandler {
         return ResponseEntity.ok().body(httpResponse);
     }
 
+    /*
+     * for duplicate email or id of user creation
+     */
+    @ExceptionHandler( { DuplicateUserException.class } )
+    public ResponseEntity<HttpResponse<Boolean>> duplicateUserException( DuplicateUserException e ){
+        HttpResponse<Boolean> httpResponse = new HttpResponse<>(
+            LocalDateTime.now(),
+            "Duplicate email address!",
+            false,
+            HttpStatus.BAD_REQUEST,
+            HttpStatus.BAD_REQUEST.value(),
+            false
+        );
+        return ResponseEntity.ok().body(httpResponse);
+    }
 
 }

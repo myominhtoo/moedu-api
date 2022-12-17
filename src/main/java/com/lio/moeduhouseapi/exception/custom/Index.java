@@ -20,4 +20,10 @@ public class Index{
         }
     }
 
+    public static class DuplicateUserException extends Exception{
+        public DuplicateUserException( String msg ){
+            super(msg);
+        }
+    }
+
 }

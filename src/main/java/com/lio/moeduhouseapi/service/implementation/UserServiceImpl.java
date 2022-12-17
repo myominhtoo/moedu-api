@@ -1,22 +1,37 @@
 package com.lio.moeduhouseapi.service.implementation;
 
+import com.lio.moeduhouseapi.exception.custom.Index.DuplicateUserException;
 import com.lio.moeduhouseapi.model.dto.CustomUserDetails;
 import com.lio.moeduhouseapi.model.entity.User;
 import com.lio.moeduhouseapi.repository.UserRepository;
 import com.lio.moeduhouseapi.service.interfaces.UserService;
+import com.lio.moeduhouseapi.util.RandomGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.view.RedirectView;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service("userService")
 public class UserServiceImpl implements UserService , UserDetailsService {
 
     private UserRepository userRepository;
+    private BCryptPasswordEncoder passwordEncoder;
+
+    @Autowired
+    public UserServiceImpl(
+            UserRepository userRepository ,
+            BCryptPasswordEncoder passwordEncoder
+    ){
+        this.userRepository = userRepository;
+        this.passwordEncoder = passwordEncoder;
+    }
+
 
     @Override
     public List<User> getAllUsers() {
@@ -27,15 +42,20 @@ public class UserServiceImpl implements UserService , UserDetailsService {
     public List<User> getUsersByRoleId(Integer roleId) {
         return this.userRepository.findUsersByRoleId(roleId);
     }
-
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository){
-        this.userRepository = userRepository;
-    }
-
     @Override
-    public User createUser(User user) {
-        return null;
+    public User createUser(User user) throws DuplicateUserException {
+        
+        if( this.isUserDuplicate(user)){
+            throw new DuplicateUserException("Duplcate user!");
+        }
+
+        user.setCreatedDate(LocalDateTime.now());
+        user.setUpdatedDate(LocalDateTime.now());
+        user.setEnable(false);
+        user.setPassword(this.passwordEncoder.encode(user.getPassword()));
+        user.setVerifyCode(RandomGenerator.generateId(user.getRole()));
+
+        return this.userRepository.save(user);
     }
 
     @Override
@@ -55,7 +75,10 @@ public class UserServiceImpl implements UserService , UserDetailsService {
 
     @Override
     public boolean isUserDuplicate(User user){
-        return false;
+       return (
+               this.userRepository.findByEmail(user.getEmail()).isPresent() ||
+                       this.userRepository.findById(user.getId()).isPresent()
+       );
     }
 
     /*
