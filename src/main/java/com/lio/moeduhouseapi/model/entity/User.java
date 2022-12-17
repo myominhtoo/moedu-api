@@ -31,6 +31,9 @@ public class User {
     @Column( name = "password" , nullable = false )
     private String password;
 
+    @Transient
+    private String confirmPassword;
+
     @OneToOne
     @JoinColumn( name = "role_id" )
     private Role role;
@@ -74,6 +77,6 @@ public class User {
     /*
       to trace different device
      */
-    @Column( name = "device_id" , nullable = false )
+    @Column( name = "device_id" , nullable = true )
     private String deviceId;
 }

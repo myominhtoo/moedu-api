@@ -44,11 +44,11 @@ public class UserServiceImpl implements UserService , UserDetailsService {
     }
     @Override
     public User createUser(User user) throws DuplicateUserException {
-        
+        user.setId(RandomGenerator.generateId(user.getRole()));
         if( this.isUserDuplicate(user)){
             throw new DuplicateUserException("Duplcate user!");
         }
-
+        
         user.setCreatedDate(LocalDateTime.now());
         user.setUpdatedDate(LocalDateTime.now());
         user.setEnable(false);
