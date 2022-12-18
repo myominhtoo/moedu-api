@@ -1,12 +1,14 @@
 package com.lio.moeduhouseapi.service.implementation;
 
 import com.lio.moeduhouseapi.exception.custom.Index.DuplicateUserException;
+import com.lio.moeduhouseapi.exception.custom.Index.InvalidUserIdExcepton;
 import com.lio.moeduhouseapi.model.dto.CustomUserDetails;
 import com.lio.moeduhouseapi.model.entity.User;
 import com.lio.moeduhouseapi.repository.UserRepository;
 import com.lio.moeduhouseapi.service.interfaces.UserService;
 import com.lio.moeduhouseapi.util.RandomGenerator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.view.RedirectView;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service("userService")
 public class UserServiceImpl implements UserService , UserDetailsService {
@@ -64,8 +67,30 @@ public class UserServiceImpl implements UserService , UserDetailsService {
     } 
 
     @Override
-    public User updateUser(User user){
-        return null;
+    public User updateUser(User user) throws InvalidUserIdExcepton , BadCredentialsException , DuplicateUserException {
+        User savedUser = this.userRepository.findById(user.getId())
+                         .orElseThrow(() -> new InvalidUserIdExcepton("Invalid user id!"));
+        if( !this.passwordEncoder.matches( user.getConfirmPassword() , savedUser.getPassword()) ){
+            throw new BadCredentialsException("Invalid password!");
+        }
+
+        Optional<User> foundUser = this.userRepository.findByEmail(user.getEmail());
+        boolean isDuplicate = foundUser.isPresent() && !foundUser.get().getId().equals(user.getId());
+
+        if(isDuplicate){
+            throw new DuplicateUserException("Duplicate User!");
+        }
+
+        savedUser.setAddress(user.getAddress());
+        savedUser.setBio(user.getBio());
+        savedUser.setEmail(user.getEmail());
+        savedUser.setFirstName(user.getFirstName());
+        savedUser.setLastName(user.getLastName());
+        savedUser.setNickName(user.getNickName());
+        savedUser.setPhone(user.getPhone());
+        savedUser.setUpdatedDate(LocalDateTime.now());
+
+        return this.userRepository.save(savedUser);
     }
 
     @Override
@@ -90,4 +115,12 @@ public class UserServiceImpl implements UserService , UserDetailsService {
                         .orElseThrow(() -> new UsernameNotFoundException("Invalid User!"));
         return new CustomUserDetails(savedUser);
     }
+
+
+    @Override
+    public User getUserByUserId(String userId) {
+        Optional<User> optionalUser = this.userRepository.findById(userId);
+        return optionalUser.isPresent() ? optionalUser.get() : null;
+    }
+
 }

@@ -26,4 +26,10 @@ public class Index{
         }
     }
 
+    public static class InvalidUserIdExcepton extends Exception{
+        public InvalidUserIdExcepton( String msg ){
+            super(msg);
+        }
+    }
+
 }

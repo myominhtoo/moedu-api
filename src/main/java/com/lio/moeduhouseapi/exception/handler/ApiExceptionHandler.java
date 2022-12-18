@@ -107,4 +107,21 @@ public class ApiExceptionHandler {
         return ResponseEntity.ok().body(httpResponse);
     }
 
+    /*
+     * accessing user with invalid user id when update user 
+     */
+    @ExceptionHandler( { InvalidUserIdExcepton.class } )
+    public ResponseEntity<HttpResponse<Boolean>> invalidUserIdException( InvalidUserIdExcepton e ){
+        HttpResponse<Boolean> httpResponse = new HttpResponse<>(
+            LocalDateTime.now(),
+            "Invalid user id!",
+            false,
+            HttpStatus.BAD_REQUEST,
+            HttpStatus.BAD_REQUEST.value(),
+            false
+        );
+        return ResponseEntity.ok().body(httpResponse);
+    }
+
+
 }
